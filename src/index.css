@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.login {
+  background: url("../src/assets/paw-bg.png");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+}
+
+@media (max-width: 960px) {
+  .login {
+    background: none;
+  }
+}

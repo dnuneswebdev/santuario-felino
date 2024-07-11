@@ -1,7 +1,17 @@
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Login from "./pages/Login";
+
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
+]);
+
 function App() {
   return (
     <>
-      <h1>Santuario Felino</h1>
+      <RouterProvider router={router} />
     </>
   );
 }
