@@ -2,10 +2,17 @@ import {PiLineVerticalThin} from "react-icons/pi";
 import {MdLogout} from "react-icons/md";
 import {CiMenuBurger} from "react-icons/ci";
 import DarkModeToggle from "./DarkModeToggle";
+import {useSelector} from "react-redux";
 
 function Header({handleSidebar}) {
+  const theme = useSelector((state) => state.userState.theme);
+
   return (
-    <div className={`bg-white w-full h-14 flex items-center p-4`}>
+    <div
+      className={`w-full h-14 flex items-center p-4 ${
+        theme === "cupcake" ? "bg-white" : "bg-base-200"
+      }`}
+    >
       <label
         htmlFor="sidebar"
         className="btn btn-sm rounded-md btn-ghost drawer-button"
