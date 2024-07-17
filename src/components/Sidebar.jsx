@@ -2,9 +2,11 @@ import {useState} from "react";
 import {Outlet} from "react-router-dom";
 import Header from "./Header";
 import SidebarLinks from "./SidebarLinks";
+import {useSelector} from "react-redux";
 
 function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const theme = useSelector((state) => state.userState.theme);
 
   function onToggleSidebar() {
     setIsSidebarOpen(!isSidebarOpen);
@@ -34,12 +36,18 @@ function Sidebar() {
           className="drawer-overlay"
         ></label>
         <ul
-          className={`menu text-base-content w-60 p-4 gap-y-2 min-h-full bg-white`}
+          className={`menu text-base-content w-60 p-4 gap-y-2 min-h-full ${
+            theme === "cupcake" ? "bg-white" : "bg-base-200"
+          }`}
         >
           <img
-            src="/src/assets/cat-logo-light.png"
+            src={`${
+              theme === "cupcake"
+                ? "/src/assets/cat-logo-light.png"
+                : "/src/assets/cat-logo-dark.png"
+            }`}
             alt=""
-            className="w-40 mx-auto mb-10"
+            className="w-40 mx-auto mb-10 "
           />
 
           <SidebarLinks />

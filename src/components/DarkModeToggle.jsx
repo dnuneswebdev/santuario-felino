@@ -1,13 +1,12 @@
-import {useState} from "react";
 import {BsMoonFill, BsSunFill} from "react-icons/bs";
+import {useDispatch} from "react-redux";
+import {toggleTheme} from "../features/user/userSlice";
 
 function DarkModeToggle() {
-  const [theme, setTheme] = useState("cupcake");
+  const dispatch = useDispatch();
 
   function handleTheme() {
-    const newTheme = theme === "cupcake" ? "dracula" : "cupcake";
-    document.documentElement.setAttribute("data-theme", newTheme);
-    setTheme(newTheme);
+    dispatch(toggleTheme());
   }
 
   return (
