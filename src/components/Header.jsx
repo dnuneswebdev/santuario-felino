@@ -1,7 +1,7 @@
-import {BsMoonFill, BsSunFill} from "react-icons/bs";
 import {PiLineVerticalThin} from "react-icons/pi";
 import {MdLogout} from "react-icons/md";
 import {CiMenuBurger} from "react-icons/ci";
+import DarkModeToggle from "./DarkModeToggle";
 
 function Header({handleSidebar}) {
   return (
@@ -23,11 +23,7 @@ function Header({handleSidebar}) {
         <p>
           <PiLineVerticalThin />
         </p>
-        <label className="swap swap-rotate">
-          <input type="checkbox" className="theme-controller" />
-          <BsSunFill className="swap-on h-5 w-5" />
-          <BsMoonFill className="swap-off h-5 w-5" />
-        </label>
+        <DarkModeToggle />
         <button className="btn btn-ghost btn-sm rounded-md btn-secondary">
           <MdLogout className="size-5" />
         </button>
