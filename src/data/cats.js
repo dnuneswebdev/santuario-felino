@@ -50,8 +50,8 @@ export const columns = {
 };
 
 export const statusTag = {
-  Adotado: "success",
-  "Pronto Para Adoção": "info",
-  Enfermo: "error",
-  "Em Recuperação": "warning",
+  Adotado: "bg-success",
+  "Pronto Para Adoção": "bg-info",
+  Enfermo: "bg-error",
+  "Em Recuperação": "bg-warning",
 };
