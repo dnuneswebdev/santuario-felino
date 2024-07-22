@@ -23,7 +23,7 @@ function Sidebar() {
       {/* app content */}
       <div className="drawer-content">
         <Header handleSidebar={onToggleSidebar} />
-        <main className="py-16 px-8">
+        <main className="p-8">
           <Outlet />
         </main>
       </div>
