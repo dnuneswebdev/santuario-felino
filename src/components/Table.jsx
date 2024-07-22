@@ -1,8 +1,9 @@
 import {HiDotsVertical} from "react-icons/hi";
 import Dropdown from "./Dropdown";
 import Pagination from "./Pagination";
+import StatusTag from "./StatusTag";
 
-function Table({columns, data, hasActions}) {
+function Table({columns, data, hasActions, statusTag}) {
   const columnKeys = Object.keys(columns);
   const columnValues = Object.values(columns);
 
@@ -21,7 +22,17 @@ function Table({columns, data, hasActions}) {
             return (
               <tr key={item.id}>
                 {columnKeys.map((column) => {
-                  return <td key={column}>{item[column]}</td>;
+                  return (
+                    <td key={column}>
+                      {column === "status" ? (
+                        <StatusTag status={statusTag[item.status]}>
+                          {item.status}
+                        </StatusTag>
+                      ) : (
+                        item[column]
+                      )}
+                    </td>
+                  );
                 })}
                 {hasActions && (
                   <td>

@@ -40,3 +40,18 @@ export const cats = [
     status: "Em Recuperação",
   },
 ];
+
+export const columns = {
+  name: "Nome",
+  breed: "Raça",
+  entryDate: "Data De Entrada",
+  departureDate: "Data De Saída",
+  status: "Status",
+};
+
+export const statusTag = {
+  Adotado: "success",
+  "Pronto Para Adoção": "info",
+  Enfermo: "error",
+  "Em Recuperação": "warning",
+};
