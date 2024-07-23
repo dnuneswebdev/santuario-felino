@@ -35,3 +35,5 @@ export const employees = [
     role: "Administrativo",
   },
 ];
+
+export const dropdownItems = ["Visualizar", "Editar", "Deletar"];

@@ -1,6 +1,6 @@
 import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
-import {employees} from "../data/employees";
+import {employees, dropdownItems} from "../data/employees";
 
 const columns = {
   name: "Nome",
@@ -13,7 +13,12 @@ function Employees() {
   return (
     <>
       <SectionTitle title="Funcionários" />
-      <Table columns={columns} data={employees} hasActions={true} />
+      <Table
+        columns={columns}
+        data={employees}
+        hasActions={true}
+        dropdownItems={dropdownItems}
+      />
     </>
   );
 }

@@ -55,3 +55,5 @@ export const statusTag = {
   Enfermo: "bg-error",
   "Em Recuperação": "bg-warning",
 };
+
+export const dropdownItems = ["Visualizar", "Editar"];

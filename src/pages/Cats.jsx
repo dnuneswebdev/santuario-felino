@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
-import {cats, statusTag, columns} from "../data/cats";
+import {cats, statusTag, columns, dropdownItems} from "../data/cats";
 
 function Cats() {
   const [formatedData, setFormatedData] = useState([]);
@@ -26,6 +26,7 @@ function Cats() {
         data={formatedData}
         hasActions={true}
         statusTag={statusTag}
+        dropdownItems={dropdownItems}
       />
     </>
   );
