@@ -3,7 +3,7 @@ import Dropdown from "./Dropdown";
 import Pagination from "./Pagination";
 import StatusTag from "./StatusTag";
 
-function Table({columns, data, hasActions, statusTag}) {
+function Table({columns, data, hasActions, statusTag, dropdownItems}) {
   const columnKeys = Object.keys(columns);
   const columnValues = Object.values(columns);
 
@@ -36,7 +36,10 @@ function Table({columns, data, hasActions, statusTag}) {
                 })}
                 {hasActions && (
                   <td>
-                    <Dropdown icon={<HiDotsVertical />} />
+                    <Dropdown
+                      icon={<HiDotsVertical />}
+                      dropdownItems={dropdownItems}
+                    />
                   </td>
                 )}
               </tr>

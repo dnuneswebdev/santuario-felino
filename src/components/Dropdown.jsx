@@ -1,4 +1,4 @@
-function Dropdown({icon}) {
+function Dropdown({icon, dropdownItems = []}) {
   return (
     <div className="dropdown dropdown-end">
       <div
@@ -10,17 +10,15 @@ function Dropdown({icon}) {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content menu bg-base-100 rounded-md z-[1] w-52 p-2 shadow"
+        className="dropdown-content menu bg-base-100 rounded-md z-[1] w-52 p-2 shadow-xl"
       >
-        <li>
-          <a>Visualizar</a>
-        </li>
-        <li>
-          <a>Editar</a>
-        </li>
-        <li>
-          <a>Deletar</a>
-        </li>
+        {dropdownItems.map((item) => {
+          return (
+            <li key={item}>
+              <a className="hover:rounded-md"> {item}</a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
