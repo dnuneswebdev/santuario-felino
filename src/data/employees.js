@@ -36,4 +36,11 @@ export const employees = [
   },
 ];
 
+export const columns = {
+  name: "Nome",
+  nationalID: "CPF",
+  entryDate: "Data De Entrada",
+  role: "Cargo",
+};
+
 export const dropdownItems = ["Visualizar", "Editar", "Deletar"];

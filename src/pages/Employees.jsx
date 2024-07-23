@@ -1,13 +1,6 @@
 import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
-import {employees, dropdownItems} from "../data/employees";
-
-const columns = {
-  name: "Nome",
-  nationalID: "CPF",
-  entryDate: "Data De Entrada",
-  role: "Cargo",
-};
+import {employees, dropdownItems, columns} from "../data/employees";
 
 function Employees() {
   return (
