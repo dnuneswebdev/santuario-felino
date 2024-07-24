@@ -7,6 +7,10 @@ function Table({columns, data, hasActions, statusTag, dropdownItems}) {
   const columnKeys = Object.keys(columns);
   const columnValues = Object.values(columns);
 
+  function handleItemClick(value) {
+    document.getElementById("modal").showModal();
+  }
+
   return (
     <div className="overflow-x-auto h-full">
       <table className="table table-zebra">
@@ -39,6 +43,7 @@ function Table({columns, data, hasActions, statusTag, dropdownItems}) {
                     <Dropdown
                       icon={<HiDotsVertical />}
                       dropdownItems={dropdownItems}
+                      handleItemClick={handleItemClick}
                     />
                   </td>
                 )}
