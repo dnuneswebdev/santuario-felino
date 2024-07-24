@@ -56,4 +56,13 @@ export const statusTag = {
   "Em Recuperação": "bg-warning",
 };
 
-export const dropdownItems = ["Visualizar", "Editar"];
+export const dropdownItems = [
+  {
+    item: "Visualizar",
+    value: "view",
+  },
+  {
+    item: "Editar",
+    value: "edit",
+  },
+];
