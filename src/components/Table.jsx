@@ -3,13 +3,16 @@ import Dropdown from "./Dropdown";
 import Pagination from "./Pagination";
 import StatusTag from "./StatusTag";
 
-function Table({columns, data, hasActions, statusTag, dropdownItems}) {
+function Table({
+  columns,
+  data,
+  hasActions,
+  statusTag,
+  dropdownItems,
+  handleItemClick,
+}) {
   const columnKeys = Object.keys(columns);
   const columnValues = Object.values(columns);
-
-  function handleItemClick(value) {
-    document.getElementById("modal").showModal();
-  }
 
   return (
     <div className="overflow-x-auto h-full">
@@ -27,7 +30,10 @@ function Table({columns, data, hasActions, statusTag, dropdownItems}) {
               <tr key={item.id}>
                 {columnKeys.map((column) => {
                   return (
-                    <td key={column}>
+                    <td
+                      key={column}
+                      className={`${column === "status" ? "w-1/5" : ""}`}
+                    >
                       {column === "status" ? (
                         <StatusTag status={statusTag[item.status]}>
                           {item.status}
@@ -43,7 +49,7 @@ function Table({columns, data, hasActions, statusTag, dropdownItems}) {
                     <Dropdown
                       icon={<HiDotsVertical />}
                       dropdownItems={dropdownItems}
-                      handleItemClick={handleItemClick}
+                      handleItemClick={(value) => handleItemClick(item, value)}
                     />
                   </td>
                 )}
