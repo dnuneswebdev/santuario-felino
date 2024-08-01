@@ -3,11 +3,14 @@ import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
 import {cats, statusTag, columns, dropdownItems} from "../data/cats";
 import Modal from "../components/Modal";
+import AddBtn from "../components/AddBtn";
 import CatView from "../components/CatView";
+import {useNavigate} from "react-router-dom";
 
 function Cats() {
   const [formatedData, setFormatedData] = useState([]);
   const [cat, setCat] = useState({});
+  const navigate = useNavigate();
 
   useEffect(function () {
     const newData = cats.map((item) => {
@@ -21,16 +24,26 @@ function Cats() {
     setFormatedData(newData);
   }, []);
 
-  function handleCatOperations(catData) {
+  function handleCatOperations(catData, mode) {
+    const operationMode = mode !== undefined ? mode : "add";
     const modal = document.getElementById("modal");
 
-    setCat(catData);
-    modal.showModal();
+    switch (operationMode) {
+      case "view":
+        setCat(catData);
+        modal.showModal();
+        break;
+      case "edit":
+        return navigate(`/cats/${catData.id}`);
+      default:
+        return navigate(`/cats/add`);
+    }
   }
 
   return (
     <>
       <SectionTitle title="Felinos" />
+      <AddBtn onClickAdd={handleCatOperations} />
       <Table
         columns={columns}
         data={formatedData}
