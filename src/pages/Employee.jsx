@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-import SectionTitle from "./SectionTitle";
+import SectionTitle from "../components/SectionTitle";
 import InputMask from "react-input-mask";
 
 function Employee() {

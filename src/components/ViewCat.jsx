@@ -1,6 +1,6 @@
 import StatusTag from "./StatusTag";
 
-function CatView({cat, statusTag}) {
+function ViewCat({cat, statusTag}) {
   return (
     <>
       <div className="flex lg:gap-16 flex-col lg:flex-row text-center lg:text-left">
@@ -48,4 +48,4 @@ function CatView({cat, statusTag}) {
   );
 }
 
-export default CatView;
+export default ViewCat;

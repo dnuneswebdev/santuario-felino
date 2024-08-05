@@ -4,8 +4,8 @@ import AppLayout from "./components/AppLayout";
 import Error from "./pages/Error";
 import Cats from "./pages/Cats";
 import Employees from "./pages/Employees";
-import Cat from "./components/Cat";
-import Employee from "./components/Employee";
+import Cat from "./pages/Cat";
+import Employee from "./pages/Employee";
 
 const router = createBrowserRouter([
   {

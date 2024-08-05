@@ -4,7 +4,7 @@ import Table from "../components/Table";
 import {cats, statusTag, columns, dropdownItems} from "../data/cats";
 import Modal from "../components/Modal";
 import AddBtn from "../components/AddBtn";
-import CatView from "../components/CatView";
+import ViewCat from "../components/ViewCat";
 import {useNavigate} from "react-router-dom";
 
 function Cats() {
@@ -53,7 +53,7 @@ function Cats() {
         handleItemClick={handleCatOperations}
       />
       <Modal title={cat.name}>
-        <CatView cat={cat} statusTag={statusTag} />
+        <ViewCat cat={cat} statusTag={statusTag} />
       </Modal>
     </>
   );
