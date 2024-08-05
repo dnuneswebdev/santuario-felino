@@ -5,6 +5,7 @@ import Error from "./pages/Error";
 import Cats from "./pages/Cats";
 import Employees from "./pages/Employees";
 import Cat from "./components/Cat";
+import Employee from "./components/Employee";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       {path: "/cats", element: <Cats />},
       {path: "/cats/:id", element: <Cat />},
       {path: "/employees", element: <Employees />},
+      {path: "/employees/:id", element: <Employee />},
     ],
   },
   {path: "/login", element: <Login />},
