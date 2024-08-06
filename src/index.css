@@ -39,6 +39,12 @@ main {
   right: 30px;
 }
 
+.spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: rotate 1.5s infinite linear;
+}
+
 @media (max-width: 960px) {
   .login {
     background: none;
@@ -48,5 +54,11 @@ main {
 @media (max-width: 1023px) {
   .drawer {
     grid-template-columns: 0rem 1fr;
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
   }
 }

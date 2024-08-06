@@ -6,6 +6,7 @@ const themes = {
 };
 
 const initialState = {
+  user: {},
   theme: "cupcake",
 };
 
@@ -13,6 +14,14 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    loginUser: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    logout: (state) => {
+      state.user = null;
+      localStorage.removeItem("user");
+    },
     toggleTheme: (state) => {
       const {dracula, cupcake} = themes;
       state.theme = state.theme === dracula ? cupcake : dracula;
@@ -21,6 +30,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {toggleTheme} = userSlice.actions;
+export const {toggleTheme, loginUser, logout} = userSlice.actions;
 
 export default userSlice.reducer;
