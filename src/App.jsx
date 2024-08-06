@@ -6,6 +6,7 @@ import Cats from "./pages/Cats";
 import Employees from "./pages/Employees";
 import Cat from "./pages/Cat";
 import Employee from "./pages/Employee";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +23,20 @@ const router = createBrowserRouter([
   {path: "/login", element: <Login />},
 ]);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
+
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   );
 }
