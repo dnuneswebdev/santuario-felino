@@ -6,9 +6,20 @@ const themes = {
 };
 
 const initialState = {
-  user: {},
-  theme: "cupcake",
+  user: getUserFromLocalStorage(),
+  theme: getThemeFromLocalStorage(),
 };
+
+function getUserFromLocalStorage() {
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+  return user;
+}
+
+function getThemeFromLocalStorage() {
+  const theme = localStorage.getItem("theme") || themes.cupcake;
+  document.documentElement.setAttribute("data-theme", theme);
+  return theme;
+}
 
 const userSlice = createSlice({
   name: "user",
@@ -26,6 +37,7 @@ const userSlice = createSlice({
       const {dracula, cupcake} = themes;
       state.theme = state.theme === dracula ? cupcake : dracula;
       document.documentElement.setAttribute("data-theme", state.theme);
+      localStorage.setItem("theme", state.theme);
     },
   },
 });
