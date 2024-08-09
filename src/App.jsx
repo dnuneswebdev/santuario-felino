@@ -6,12 +6,17 @@ import Cats from "./pages/Cats";
 import Employees from "./pages/Employees";
 import Cat from "./pages/Cat";
 import Employee from "./pages/Employee";
+import ProtectedRoute from "./components/ProtectedRoute";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
     errorElement: <Error />,
     children: [
       {path: "/cats", element: <Cats />},
