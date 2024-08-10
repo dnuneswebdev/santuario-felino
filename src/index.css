@@ -40,8 +40,6 @@ main {
 }
 
 .spinner {
-  width: 1.5rem;
-  height: 1.5rem;
   animation: rotate 1.5s infinite linear;
 }
 
