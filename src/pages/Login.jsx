@@ -87,7 +87,11 @@ function Login() {
                     className="btn btn-secondary btn-block rounded-md  text-lg font-semibold shadow-sm capitalize text-white"
                     disabled={!isValid || isPending}
                   >
-                    {!isPending ? "Entrar" : <ImSpinner9 className="spinner" />}
+                    {!isPending ? (
+                      "Entrar"
+                    ) : (
+                      <ImSpinner9 className="spinner w-6 h-6" />
+                    )}
                   </button>
                 </div>
               </form>
