@@ -1,14 +1,11 @@
 import {useState} from "react";
-import {Outlet, useNavigation} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import Header from "./Header";
 import SidebarLinks from "./SidebarLinks";
 import {useSelector} from "react-redux";
-import Loading from "./Loading";
 
 function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const navigation = useNavigation();
-  const isPageLoading = navigation.state === "loading";
   const theme = useSelector((state) => state.userState.theme);
 
   function onToggleSidebar() {
@@ -26,7 +23,9 @@ function Sidebar() {
       {/* app content */}
       <div className="drawer-content">
         <Header handleSidebar={onToggleSidebar} />
-        <main className="p-8">{isPageLoading ? <Loading /> : <Outlet />}</main>
+        <main className="p-8">
+          <Outlet />
+        </main>
       </div>
 
       {/* menu */}
