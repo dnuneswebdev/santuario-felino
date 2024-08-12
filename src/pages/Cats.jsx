@@ -1,28 +1,20 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import {statusTag, columns, dropdownItems} from "../data/cats";
+import {useNavigate} from "react-router-dom";
+import {useGetCats} from "../hooks/cats/useGetCats";
 import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
-import {cats, statusTag, columns, dropdownItems} from "../data/cats";
 import Modal from "../components/Modal";
 import AddBtn from "../components/AddBtn";
 import ViewCat from "../components/ViewCat";
-import {useNavigate} from "react-router-dom";
+import Loading from "../components/Loading";
 
 function Cats() {
-  const [formatedData, setFormatedData] = useState([]);
+  const {isPending, cats} = useGetCats();
   const [cat, setCat] = useState({});
   const navigate = useNavigate();
 
-  useEffect(function () {
-    const newData = cats.map((item) => {
-      item.departureDate === null
-        ? (item.departureDate = "-")
-        : item.departureDate;
-
-      return item;
-    });
-
-    setFormatedData(newData);
-  }, []);
+  if (isPending) return <Loading />;
 
   function handleCatOperations(catData, mode) {
     const operationMode = mode !== undefined ? mode : "add";
@@ -46,7 +38,7 @@ function Cats() {
       <AddBtn onClickAdd={handleCatOperations} />
       <Table
         columns={columns}
-        data={formatedData}
+        data={cats}
         hasActions={true}
         statusTag={statusTag}
         dropdownItems={dropdownItems}
