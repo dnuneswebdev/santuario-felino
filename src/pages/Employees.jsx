@@ -1,15 +1,20 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {employees, dropdownItems, columns} from "../data/employees";
+import {dropdownItems, columns} from "../data/employees";
+import {useGetEmployees} from "../hooks/employees/useGetEmployees";
 import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
 import Modal from "../components/Modal";
 import ViewEmployee from "../components/ViewEmployee";
 import AddBtn from "../components/AddBtn";
+import Loading from "../components/Loading";
 
 function Employees() {
   const [employee, setEmployee] = useState({});
+  const {isPending, employees} = useGetEmployees();
   const navigate = useNavigate();
+
+  if (isPending) return <Loading />;
 
   function handleEmployeesOperations(employeeData, mode) {
     const operationMode = mode !== undefined ? mode : "add";
