@@ -1,9 +1,50 @@
+import {useRef} from "react";
+import {useUploadEmployeeImage} from "../hooks/employees/useUploadEmployeeImage";
+import {ImSpinner9} from "react-icons/im";
+
 function ViewEmployee({employee}) {
+  const fileInputRef = useRef();
+  const {uploadEmployeeImage, isUploading} = useUploadEmployeeImage();
+
+  function onImageClick() {
+    return fileInputRef.current.click();
+  }
+
+  function onSelectImage(e) {
+    const imageFile = e.target.files[0];
+
+    uploadEmployeeImage(
+      {imageFile, id: employee.id},
+      {
+        onSuccess: (newEmployeeImage) => {
+          employee.image = newEmployeeImage;
+        },
+      }
+    );
+  }
+
   return (
     <>
       <div className="flex lg:gap-16 flex-col lg:flex-row text-center lg:text-left">
         <div className="col-span-3">
-          <img src={employee.image} className="lg:w-48 lg:h-48 rounded-md" />
+          <input
+            type="file"
+            className="file-input file-input-ghost hidden"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={onSelectImage}
+          />
+          {isUploading ? (
+            <ImSpinner9 className="spinner w-6 h-6" />
+          ) : (
+            <div className="tooltip tooltip-bottom" data-tip="Carregar Imagem">
+              <img
+                src={employee.image ? employee.image : "/src/assets/user.png"}
+                className="lg:w-48 lg:h-48 rounded-md cursor-pointer"
+                onClick={onImageClick}
+              />
+            </div>
+          )}
         </div>
         <div className="col-span-3 mt-4 lg:mt-0">
           <h4 className="font-bold">Nome:</h4>

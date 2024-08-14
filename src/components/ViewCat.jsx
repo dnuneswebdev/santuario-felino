@@ -1,11 +1,51 @@
+import {useRef} from "react";
+import {useUploadCatImage} from "../hooks/cats/useUploadCatImage";
+import {ImSpinner9} from "react-icons/im";
 import StatusTag from "./StatusTag";
 
 function ViewCat({cat, statusTag}) {
+  const fileInputRef = useRef();
+  const {uploadCatImage, isUploading} = useUploadCatImage();
+
+  function onImageClick() {
+    return fileInputRef.current.click();
+  }
+
+  function onSelectImage(e) {
+    const imageFile = e.target.files[0];
+
+    uploadCatImage(
+      {imageFile, id: cat.id},
+      {
+        onSuccess: (newCatImage) => {
+          cat.image = newCatImage;
+        },
+      }
+    );
+  }
+
   return (
     <>
       <div className="flex lg:gap-16 flex-col lg:flex-row text-center lg:text-left">
         <div className="col-span-3">
-          <img src={cat.image} className="lg:w-48 lg:h-48 rounded-md" />
+          <input
+            type="file"
+            className="file-input file-input-ghost hidden"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={onSelectImage}
+          />
+          {isUploading ? (
+            <ImSpinner9 className="spinner w-6 h-6" />
+          ) : (
+            <div className="tooltip tooltip-bottom" data-tip="Carregar Imagem">
+              <img
+                src={cat.image ? cat.image : "/src/assets/cat-default.png"}
+                className="lg:w-48 lg:h-48 rounded-md cursor-pointer"
+                onClick={onImageClick}
+              />
+            </div>
+          )}
         </div>
         <div className="col-span-3 mt-4 lg:mt-0">
           <h4 className="font-bold">Raça:</h4>
