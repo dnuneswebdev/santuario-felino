@@ -20,6 +20,14 @@ export async function getCats() {
   return newData;
 }
 
+export async function createCat(newCat) {
+  const {data, error} = await supabase.from("cats").insert(newCat);
+
+  if (error) throw new Error("Não foi possível cadastrar o Felino, 😢", error);
+
+  return data;
+}
+
 export async function uploadCatImage(imageFile, id) {
   const imageName = `${Math.random()}-${imageFile.name}`.replaceAll("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cats/${imageName}`;

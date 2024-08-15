@@ -1,9 +1,11 @@
 import {useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
+import {useCreateCat} from "../hooks/cats/useCreateCat";
 import SectionTitle from "../components/SectionTitle";
 
 function Cat() {
+  const {createCat, isCreatingCat} = useCreateCat();
   const params = useParams();
   const isEditing = params.id !== "add";
   const {
@@ -14,7 +16,15 @@ function Cat() {
   const navigate = useNavigate();
 
   function onSubmit(formValues) {
-    console.log("🚀 ~ onSubmit ~ formValues:", formValues);
+    formValues.departureDate === ""
+      ? (formValues.departureDate = null)
+      : formValues.departureDate;
+
+    createCat(formValues, {
+      onSuccess: () => {
+        navigate("/cats");
+      },
+    });
   }
 
   return (
@@ -121,7 +131,8 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="departureDate"
               id="departureDate"
-              {...register("departureDate")}
+              defaultValue={null}
+              {...register("departureDate", {valueAsDate: true})}
             />
             <label htmlFor="microchipNumber" className="mt-4">
               Microchip Nº
@@ -134,9 +145,25 @@ function Cat() {
               min="0"
               {...register("microchipNumber", {min: 0, valueAsNumber: true})}
             />
-            <label htmlFor="status" className="mt-4">
-              Status
+            <label htmlFor="color" className="mt-4">
+              Cor
             </label>
+            <input
+              type="text"
+              className="input input-bordered input-sm w-full max-w-xs rounded-md"
+              name="color"
+              id="color"
+              {...register("color", {required: "Cor é obrigatório"})}
+              aria-invalid={errors.color ? "true" : "false"}
+            />
+            {errors.color && (
+              <p role="alert" className="text-red-500">
+                {errors.color.message}
+              </p>
+            )}
+          </div>
+          <div className="grid">
+            <label htmlFor="status">Status</label>
             <select
               className="select select-sm select-bordered w-full max-w-xs rounded-md select-md"
               name="status"
@@ -148,9 +175,9 @@ function Cat() {
               <option>Em Recuperação</option>
               <option>Enfermo</option>
             </select>
-          </div>
-          <div className="grid">
-            <label htmlFor="fiv">FIV</label>
+            <label htmlFor="fiv" className="mt-4">
+              FIV
+            </label>
             <input
               type="checkbox"
               className="checkbox checkbox-secondary rounded-md"
@@ -217,7 +244,11 @@ function Cat() {
           >
             Cancelar
           </button>
-          <button className="btn btn-secondary rounded-md btn-sm" type="submit">
+          <button
+            className="btn btn-secondary rounded-md btn-sm"
+            type="submit"
+            disabled={isCreatingCat}
+          >
             Salvar
           </button>
         </div>
