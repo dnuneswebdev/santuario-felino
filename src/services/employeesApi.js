@@ -1,10 +1,27 @@
+import {formatDate} from "../utils/helpers";
 import supabase, {supabaseUrl} from "./supabase";
 
 export async function getEmployees() {
   const {data, error} = await supabase.from("employees").select("*");
 
+  const newData = data.map((item) => {
+    item.entryDate = formatDate(item.entryDate);
+    item.birthDate = formatDate(item.birthDate);
+
+    return item;
+  });
+
   if (error)
     throw new Error("Não foi possível carregar as informações, 😢", error);
+
+  return newData;
+}
+
+export async function createEmployee(newEmployee) {
+  const {data, error} = await supabase.from("employees").insert(newEmployee);
+
+  if (error)
+    throw new Error("Não foi possível cadastrar o Funcionário, 😢", error);
 
   return data;
 }

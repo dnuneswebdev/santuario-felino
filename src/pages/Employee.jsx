@@ -1,10 +1,12 @@
 import {useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
+import {useCreateEmployee} from "../hooks/employees/useCreateEmployee";
 import SectionTitle from "../components/SectionTitle";
 import InputMask from "react-input-mask";
 
 function Employee() {
+  const {createEmployee, isCreatingEmployee} = useCreateEmployee();
   const params = useParams();
   const isEditing = params.id !== "add";
   const {
@@ -15,7 +17,11 @@ function Employee() {
   const navigate = useNavigate();
 
   function onSubmit(formValues) {
-    console.log("🚀 ~ onSubmit ~ formValues:", formValues);
+    createEmployee(formValues, {
+      onSuccess: () => {
+        navigate("/employees");
+      },
+    });
   }
 
   return (
@@ -161,7 +167,11 @@ function Employee() {
           >
             Cancelar
           </button>
-          <button className="btn btn-secondary rounded-md btn-sm" type="submit">
+          <button
+            className="btn btn-secondary rounded-md btn-sm"
+            type="submit"
+            disabled={isCreatingEmployee}
+          >
             Salvar
           </button>
         </div>
