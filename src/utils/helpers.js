@@ -4,3 +4,10 @@ export const formatDate = (dateStr) => {
 
   return newDate;
 };
+
+export const defaultFormatDate = (dateStr) => {
+  const [day, month, year] = dateStr.split("/");
+  let newDate = `${year}-${month}-${day}`;
+
+  return newDate;
+};

@@ -5,10 +5,9 @@ export async function getCats() {
   const {data, error} = await supabase.from("cats").select("*");
 
   const newData = data.map((item) => {
-    item.departureDate === null
-      ? (item.departureDate = "-")
-      : (item.departureDate = formatDate(item.departureDate));
-
+    item.departureDate
+      ? (item.departureDate = formatDate(item.departureDate))
+      : null;
     item.entryDate = formatDate(item.entryDate);
 
     return item;
@@ -24,6 +23,18 @@ export async function createCat(newCat) {
   const {data, error} = await supabase.from("cats").insert(newCat);
 
   if (error) throw new Error("Não foi possível cadastrar o Felino, 😢", error);
+
+  return data;
+}
+
+export async function editCat(cat, id) {
+  const {data, error} = await supabase
+    .from("cats")
+    .update(cat)
+    .eq("id", id)
+    .select();
+
+  if (error) throw new Error("Não foi possível editar o Felino, 😢", error);
 
   return data;
 }

@@ -2,10 +2,15 @@ import {useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {useCreateCat} from "../hooks/cats/useCreateCat";
+import {useEditCat} from "../hooks/cats/useEditCat";
+import {useSelector} from "react-redux";
+import {defaultFormatDate} from "../utils/helpers";
 import SectionTitle from "../components/SectionTitle";
 
 function Cat() {
+  const cat = useSelector((state) => state.cat.cat);
   const {createCat, isCreatingCat} = useCreateCat();
+  const {editCat, isEditingCat} = useEditCat();
   const params = useParams();
   const isEditing = params.id !== "add";
   const {
@@ -16,15 +21,27 @@ function Cat() {
   const navigate = useNavigate();
 
   function onSubmit(formValues) {
+    console.log(formValues);
     formValues.departureDate === ""
       ? (formValues.departureDate = null)
       : formValues.departureDate;
 
-    createCat(formValues, {
-      onSuccess: () => {
-        navigate("/cats");
-      },
-    });
+    if (isEditing) {
+      editCat(
+        {cat: formValues, id: cat.id},
+        {
+          onSuccess: () => {
+            navigate("/cats");
+          },
+        }
+      );
+    } else {
+      createCat(formValues, {
+        onSuccess: () => {
+          navigate("/cats");
+        },
+      });
+    }
   }
 
   return (
@@ -39,6 +56,7 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="name"
               id="name"
+              defaultValue={isEditing ? cat.name : ""}
               {...register("name", {required: "Nome é obrigatório"})}
               aria-invalid={errors.name ? "true" : "false"}
             />
@@ -55,6 +73,7 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="breed"
               id="breed"
+              defaultValue={isEditing ? cat.breed : ""}
               {...register("breed", {required: "Raça é obrigatório"})}
               aria-invalid={errors.breed ? "true" : "false"}
             />
@@ -72,6 +91,8 @@ function Cat() {
               name="age"
               id="age"
               min="0"
+              step=".01"
+              defaultValue={isEditing ? cat.age : ""}
               {...register("age", {
                 required: "Idade é obrigatório",
                 min: 0,
@@ -93,6 +114,8 @@ function Cat() {
               name="weight"
               id="weight"
               min="0"
+              step=".01"
+              defaultValue={isEditing ? cat.weight : ""}
               {...register("weight", {
                 required: "Peso é obrigatório",
                 min: 0,
@@ -113,6 +136,7 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="entryDate"
               id="entryDate"
+              defaultValue={isEditing ? defaultFormatDate(cat.entryDate) : null}
               {...register("entryDate", {
                 required: "Data De Entrada é obrigatório",
               })}
@@ -131,8 +155,12 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="departureDate"
               id="departureDate"
-              defaultValue={null}
-              {...register("departureDate", {valueAsDate: true})}
+              defaultValue={
+                isEditing && cat.departureDate
+                  ? defaultFormatDate(cat.departureDate)
+                  : null
+              }
+              {...register("departureDate")}
             />
             <label htmlFor="microchipNumber" className="mt-4">
               Microchip Nº
@@ -143,6 +171,7 @@ function Cat() {
               name="microchipNumber"
               id="microchipNumber"
               min="0"
+              defaultValue={isEditing ? cat.microchipNumber : ""}
               {...register("microchipNumber", {min: 0, valueAsNumber: true})}
             />
             <label htmlFor="color" className="mt-4">
@@ -153,6 +182,7 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="color"
               id="color"
+              defaultValue={isEditing ? cat.color : ""}
               {...register("color", {required: "Cor é obrigatório"})}
               aria-invalid={errors.color ? "true" : "false"}
             />
@@ -169,6 +199,7 @@ function Cat() {
               name="status"
               id="status"
               {...register("status")}
+              defaultValue={isEditing ? cat.status : ""}
             >
               <option defaultValue="adotado">Adotado</option>
               <option>Pronto Para Adoção</option>
@@ -183,6 +214,7 @@ function Cat() {
               className="checkbox checkbox-secondary rounded-md"
               name="fiv"
               id="fiv"
+              defaultChecked={isEditing ? cat.fiv : false}
               {...register("fiv")}
             />
             <label htmlFor="felv" className="mt-4">
@@ -193,6 +225,7 @@ function Cat() {
               className="checkbox checkbox-secondary rounded-md"
               name="felv"
               id="felv"
+              defaultChecked={isEditing ? cat.felv : false}
               {...register("felv")}
             />
             <label htmlFor="vacinated" className="mt-4">
@@ -203,6 +236,7 @@ function Cat() {
               className="checkbox checkbox-secondary rounded-md"
               name="vacinated"
               id="vacinated"
+              defaultChecked={isEditing ? cat.vacinated : false}
               {...register("vacinated")}
             />
           </div>
@@ -217,6 +251,7 @@ function Cat() {
               name="description"
               id="description"
               rows="4"
+              defaultValue={isEditing ? cat.description : ""}
               {...register("description")}
             />
           </div>
@@ -229,6 +264,7 @@ function Cat() {
               name="healthComments"
               id="healthComments"
               rows="4"
+              defaultValue={isEditing ? cat.healthComments : ""}
               {...register("healthComments")}
             />
           </div>
@@ -247,7 +283,7 @@ function Cat() {
           <button
             className="btn btn-secondary rounded-md btn-sm"
             type="submit"
-            disabled={isCreatingCat}
+            disabled={isCreatingCat || isEditingCat}
           >
             Salvar
           </button>
