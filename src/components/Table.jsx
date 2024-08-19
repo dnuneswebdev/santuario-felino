@@ -38,6 +38,8 @@ function Table({
                         <StatusTag status={statusTag[item.status]}>
                           {item.status}
                         </StatusTag>
+                      ) : item[column] === null ? (
+                        "-"
                       ) : (
                         item[column]
                       )}

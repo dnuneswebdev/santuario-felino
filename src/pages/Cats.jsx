@@ -2,6 +2,8 @@ import {useState} from "react";
 import {statusTag, columns, dropdownItems} from "../data/cats";
 import {useNavigate} from "react-router-dom";
 import {useGetCats} from "../hooks/cats/useGetCats";
+import {useDispatch} from "react-redux";
+import {loadCat} from "../features/cat/catSlice";
 import SectionTitle from "../components/SectionTitle";
 import Table from "../components/Table";
 import Modal from "../components/Modal";
@@ -13,6 +15,7 @@ function Cats() {
   const {isPending, cats} = useGetCats();
   const [cat, setCat] = useState({});
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   if (isPending) return <Loading />;
 
@@ -26,6 +29,7 @@ function Cats() {
         modal.showModal();
         break;
       case "edit":
+        dispatch(loadCat(catData));
         return navigate(`/cats/${catData.id}`);
       default:
         return navigate(`/cats/add`);
