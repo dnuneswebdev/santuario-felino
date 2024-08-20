@@ -26,6 +26,19 @@ export async function createEmployee(newEmployee) {
   return data;
 }
 
+export async function editEmployee(employee, id) {
+  const {data, error} = await supabase
+    .from("employees")
+    .update(employee)
+    .eq("id", id)
+    .select();
+
+  if (error)
+    throw new Error("Não foi possível editar o Funcionário, 😢", error);
+
+  return data;
+}
+
 export async function uploadEmployeeImage(imageFile, id) {
   const imageName = `${Math.random()}-${imageFile.name}`.replaceAll("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/employees/${imageName}`;
