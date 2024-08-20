@@ -2,11 +2,16 @@ import {useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {useCreateEmployee} from "../hooks/employees/useCreateEmployee";
+import {useSelector} from "react-redux";
+import {useEditEmployee} from "../hooks/employees/useEditEmployee";
+import {defaultFormatDate} from "../utils/helpers";
 import SectionTitle from "../components/SectionTitle";
 import InputMask from "react-input-mask";
 
 function Employee() {
+  const employee = useSelector((state) => state.employee.employee);
   const {createEmployee, isCreatingEmployee} = useCreateEmployee();
+  const {editEmployee, isEditingEmployee} = useEditEmployee();
   const params = useParams();
   const isEditing = params.id !== "add";
   const {
@@ -17,11 +22,26 @@ function Employee() {
   const navigate = useNavigate();
 
   function onSubmit(formValues) {
-    createEmployee(formValues, {
-      onSuccess: () => {
-        navigate("/employees");
-      },
-    });
+    if (isEditing) {
+      editEmployee(
+        {employee: formValues, id: employee.id},
+        {
+          onSuccess: () => {
+            navigateToEmployees();
+          },
+        }
+      );
+    } else {
+      createEmployee(formValues, {
+        onSuccess: () => {
+          navigateToEmployees();
+        },
+      });
+    }
+  }
+
+  function navigateToEmployees() {
+    return navigate("/employees");
   }
 
   return (
@@ -36,6 +56,7 @@ function Employee() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="name"
               id="name"
+              defaultValue={isEditing ? employee.name : ""}
               {...register("name", {required: "Nome é obrigatório"})}
               aria-invalid={errors.name ? "true" : "false"}
             />
@@ -53,6 +74,7 @@ function Employee() {
               name="nationalID"
               id="nationalID"
               mask="999.999.999-99"
+              defaultValue={isEditing ? employee.nationalID : ""}
               {...register("nationalID", {required: "CPF é obrigatório"})}
               aria-invalid={errors.nationalID ? "true" : "false"}
             />
@@ -70,6 +92,7 @@ function Employee() {
               name="rg"
               id="rg"
               mask="99.999.999-9"
+              defaultValue={isEditing ? employee.rg : ""}
               {...register("rg", {
                 required: "RG é obrigatório",
               })}
@@ -89,6 +112,7 @@ function Employee() {
               name="age"
               id="age"
               min="0"
+              defaultValue={isEditing ? employee.age : ""}
               {...register("age", {
                 required: "Idade é obrigatório",
                 min: 0,
@@ -109,6 +133,9 @@ function Employee() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="birthDate"
               id="birthDate"
+              defaultValue={
+                isEditing ? defaultFormatDate(employee.birthDate) : null
+              }
               {...register("birthDate", {
                 required: "Data De Nascimento é obrigatório",
               })}
@@ -127,6 +154,9 @@ function Employee() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="entryDate"
               id="entryDate"
+              defaultValue={
+                isEditing ? defaultFormatDate(employee.entryDate) : null
+              }
               {...register("entryDate", {
                 required: "Data De Entrada é obrigatório",
               })}
@@ -145,6 +175,7 @@ function Employee() {
               className="select select-sm select-bordered w-full max-w-xs rounded-md select-md"
               name="role"
               id="role"
+              defaultValue={isEditing ? employee.role : ""}
               {...register("role")}
             >
               <option defaultValue="Administrativo">Administrativo</option>
@@ -170,7 +201,7 @@ function Employee() {
           <button
             className="btn btn-secondary rounded-md btn-sm"
             type="submit"
-            disabled={isCreatingEmployee}
+            disabled={isCreatingEmployee || isEditingEmployee}
           >
             Salvar
           </button>
