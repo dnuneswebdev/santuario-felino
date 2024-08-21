@@ -72,4 +72,8 @@ export const dropdownItems = [
     item: "Editar",
     value: "edit",
   },
+  {
+    item: "Deletar",
+    value: "delete",
+  },
 ];

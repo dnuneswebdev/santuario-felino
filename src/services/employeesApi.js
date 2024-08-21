@@ -59,3 +59,13 @@ export async function uploadEmployeeImage(imageFile, id) {
 
   return data.image;
 }
+
+export async function deleteEmployee(id) {
+  const {data, error} = await supabase.from("employees").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("O Funcionário não pode ser deletado.");
+  }
+  return data;
+}

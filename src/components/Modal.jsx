@@ -1,11 +1,9 @@
-function Modal({children, title}) {
+function Modal({children, title, id}) {
   return (
     <div>
-      <dialog id="modal" className="modal">
+      <dialog id={id} className="modal">
         <div className="modal-box max-w-3xl w-100">
-          <h3 className="font-bold text-2xl mb-4 text-center lg:text-left">
-            {title}
-          </h3>
+          <h3 className="font-bold text-2xl mb-4 text-center ">{title}</h3>
           <>{children}</>
           <div className="modal-action">
             <form method="dialog">
