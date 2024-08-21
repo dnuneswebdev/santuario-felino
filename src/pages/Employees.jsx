@@ -19,13 +19,13 @@ function Employees() {
   const {deleteEmployee} = useDeleteEmployee();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const viewModal = document.getElementById("viewModal");
   const deleteModal = document.getElementById("deleteModal");
 
   if (isPending) return <Loading />;
 
   function handleEmployeesOperations(employeeData, mode) {
     const operationMode = mode !== undefined ? mode : "add";
+    const viewModal = document.getElementById("viewModal");
 
     switch (operationMode) {
       case "view":
