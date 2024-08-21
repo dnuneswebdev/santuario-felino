@@ -21,12 +21,12 @@ function Cats() {
 
   function handleCatOperations(catData, mode) {
     const operationMode = mode !== undefined ? mode : "add";
-    const modal = document.getElementById("modal");
+    const viewModal = document.getElementById("viewModal");
 
     switch (operationMode) {
       case "view":
         setCat(catData);
-        modal.showModal();
+        viewModal.showModal();
         break;
       case "edit":
         dispatch(loadCat(catData));
@@ -48,7 +48,7 @@ function Cats() {
         dropdownItems={dropdownItems}
         handleItemClick={handleCatOperations}
       />
-      <Modal title={cat.name}>
+      <Modal title={cat.name} id="viewModal">
         <ViewCat cat={cat} statusTag={statusTag} />
       </Modal>
     </>
