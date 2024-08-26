@@ -117,3 +117,19 @@ export const dropdownItems = [
     value: "edit",
   },
 ];
+
+export const filter = {
+  field: "Nome",
+  value: "name",
+};
+
+export const sort = [
+  {
+    label: "Status a-Z",
+    value: "status-asc",
+  },
+  {
+    label: "Status Z-a",
+    value: "status-desc",
+  },
+];

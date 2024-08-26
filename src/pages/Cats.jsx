@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {statusTag, columns, dropdownItems} from "../data/cats";
+import {statusTag, columns, dropdownItems, filter, sort} from "../data/cats";
 import {useNavigate} from "react-router-dom";
 import {useGetCats} from "../hooks/cats/useGetCats";
 import {useDispatch} from "react-redux";
@@ -10,6 +10,7 @@ import Modal from "../components/Modal";
 import AddBtn from "../components/AddBtn";
 import ViewCat from "../components/ViewCat";
 import Loading from "../components/Loading";
+import Filters from "../components/Filters";
 
 function Cats() {
   const {isPending, cats} = useGetCats();
@@ -40,6 +41,7 @@ function Cats() {
     <>
       <SectionTitle title="Felinos" />
       <AddBtn onClickAdd={handleCatOperations} />
+      <Filters filterField={filter} sortFields={sort} />
       <Table
         columns={columns}
         data={cats}

@@ -1,8 +1,18 @@
 import {formatDate} from "../utils/helpers";
 import supabase, {supabaseUrl} from "./supabase";
 
-export async function getCats() {
-  const {data, error} = await supabase.from("cats").select("*");
+export async function getCats({filter, sortBy}) {
+  let query = supabase.from("cats").select("*");
+
+  if (filter && filter.value !== "undefined")
+    query = query.ilike("name", `%${filter.value}%`, {type: "websearch"});
+
+  if (sortBy)
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
+
+  const {data, error} = await query;
 
   const newData = data.map((item) => {
     item.departureDate
