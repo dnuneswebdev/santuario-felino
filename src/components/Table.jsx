@@ -14,6 +14,14 @@ function Table({
   const columnKeys = Object.keys(columns);
   const columnValues = Object.values(columns);
 
+  if (data.length === 0) {
+    return (
+      <div className="flex justify-center items-center">
+        <h2 className="text-2xl mt-16">Nenhum dado encontrado.</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-x-auto h-full">
       <table className="table table-zebra">
