@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {dropdownItems, columns} from "../data/employees";
+import {dropdownItems, columns, filter} from "../data/employees";
 import {useGetEmployees} from "../hooks/employees/useGetEmployees";
 import {useDispatch} from "react-redux";
 import {loadEmployee} from "../features/employee/employeeSlice";
@@ -12,6 +12,7 @@ import ViewEmployee from "../components/ViewEmployee";
 import AddBtn from "../components/AddBtn";
 import Loading from "../components/Loading";
 import DeleteModal from "../components/DeleteModal";
+import Filters from "../components/Filters";
 
 function Employees() {
   const [employee, setEmployee] = useState({});
@@ -58,6 +59,7 @@ function Employees() {
     <>
       <SectionTitle title="Funcionários" />
       <AddBtn onClickAdd={handleEmployeesOperations} />
+      <Filters filterField={filter} />
       <Table
         columns={columns}
         data={employees}

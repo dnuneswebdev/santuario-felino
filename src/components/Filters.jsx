@@ -38,25 +38,28 @@ function Filters({filterField, sortFields}) {
           placeholder={filterField.field}
           name={filterField.value}
           defaultValue={searchParams.get("name") || ""}
+          autoFocus
           {...register("name", {onChange: (e) => onSearch(e)})}
         />
-        <select
-          className="select select-sm select-bordered w-48 rounded-md select-md"
-          placeholder="Status"
-          defaultValue={searchParams.get("sortBy") || ""}
-          {...register("status", {onChange: (e) => onSortBy(e)})}
-        >
-          <option disabled={true} value="">
-            Ordenar por
-          </option>
-          {sortFields.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            );
-          })}
-        </select>
+        {sortFields && (
+          <select
+            className="select select-sm select-bordered w-48 rounded-md select-md"
+            placeholder="Status"
+            defaultValue={searchParams.get("sortBy") || ""}
+            {...register("status", {onChange: (e) => onSortBy(e)})}
+          >
+            <option disabled={true} value="">
+              Ordenar por
+            </option>
+            {sortFields.map((option) => {
+              return (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })}
+          </select>
+        )}
         {searchParams.size > 0 && (
           <button
             type="button"
