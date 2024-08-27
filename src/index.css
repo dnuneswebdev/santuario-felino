@@ -43,6 +43,11 @@ main {
   animation: rotate 1.5s infinite linear;
 }
 
+.input:focus,
+.input:focus-within {
+  outline-style: none;
+}
+
 @media (max-width: 960px) {
   .login {
     background: none;

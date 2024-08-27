@@ -77,3 +77,8 @@ export const dropdownItems = [
     value: "delete",
   },
 ];
+
+export const filter = {
+  field: "Nome",
+  value: "name",
+};

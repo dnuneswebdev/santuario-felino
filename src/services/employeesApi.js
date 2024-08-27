@@ -1,8 +1,13 @@
 import {formatDate} from "../utils/helpers";
 import supabase, {supabaseUrl} from "./supabase";
 
-export async function getEmployees() {
-  const {data, error} = await supabase.from("employees").select("*");
+export async function getEmployees({filter}) {
+  let query = supabase.from("employees").select("*");
+
+  if (filter && filter.value !== "undefined")
+    query = query.ilike("name", `%${filter.value}%`, {type: "websearch"});
+
+  const {data, error} = await query;
 
   const newData = data.map((item) => {
     item.entryDate = formatDate(item.entryDate);
