@@ -1,8 +1,9 @@
-import {formatDate} from "../utils/helpers";
 import supabase, {supabaseUrl} from "./supabase";
+import {formatDate} from "../utils/helpers";
+import {PAGE_SIZE} from "../utils/constants";
 
-export async function getCats({filter, sortBy}) {
-  let query = supabase.from("cats").select("*");
+export async function getCats({filter, sortBy, page}) {
+  let query = supabase.from("cats").select("*", {count: "exact"});
 
   if (filter && filter.value !== "undefined")
     query = query.ilike("name", `%${filter.value}%`, {type: "websearch"});
@@ -12,7 +13,13 @@ export async function getCats({filter, sortBy}) {
       ascending: sortBy.direction === "asc",
     });
 
-  const {data, error} = await query;
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const {data, error, count} = await query;
 
   const newData = data.map((item) => {
     item.departureDate
@@ -26,7 +33,7 @@ export async function getCats({filter, sortBy}) {
   if (error)
     throw new Error("Não foi possível carregar as informações, 😢", error);
 
-  return newData;
+  return {newData, count};
 }
 
 export async function createCat(newCat) {
