@@ -13,7 +13,7 @@ import Loading from "../components/Loading";
 import Filters from "../components/Filters";
 
 function Cats() {
-  const {isPending, cats} = useGetCats();
+  const {isPending, cats, count} = useGetCats();
   const [cat, setCat] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ function Cats() {
         statusTag={statusTag}
         dropdownItems={dropdownItems}
         handleItemClick={handleCatOperations}
+        count={count}
       />
       <Modal title={cat.name} id="viewModal">
         <ViewCat cat={cat} statusTag={statusTag} />

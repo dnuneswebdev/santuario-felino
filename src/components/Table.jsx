@@ -10,6 +10,7 @@ function Table({
   statusTag,
   dropdownItems,
   handleItemClick,
+  count,
 }) {
   const columnKeys = Object.keys(columns);
   const columnValues = Object.values(columns);
@@ -68,7 +69,7 @@ function Table({
           })}
         </tbody>
       </table>
-      <Pagination />
+      <Pagination totalResults={count} />
     </div>
   );
 }
