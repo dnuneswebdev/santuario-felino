@@ -1,13 +1,20 @@
 import {formatDate} from "../utils/helpers";
 import supabase, {supabaseUrl} from "./supabase";
+import {PAGE_SIZE} from "../utils/constants";
 
-export async function getEmployees({filter}) {
-  let query = supabase.from("employees").select("*");
+export async function getEmployees({filter, page}) {
+  let query = supabase.from("employees").select("*", {count: "exact"});
 
   if (filter && filter.value !== "undefined")
     query = query.ilike("name", `%${filter.value}%`, {type: "websearch"});
 
-  const {data, error} = await query;
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const {data, error, count} = await query;
 
   const newData = data.map((item) => {
     item.entryDate = formatDate(item.entryDate);
@@ -19,7 +26,7 @@ export async function getEmployees({filter}) {
   if (error)
     throw new Error("Não foi possível carregar as informações, 😢", error);
 
-  return newData;
+  return {newData, count};
 }
 
 export async function createEmployee(newEmployee) {

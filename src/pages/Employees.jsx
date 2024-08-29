@@ -16,7 +16,7 @@ import Filters from "../components/Filters";
 
 function Employees() {
   const [employee, setEmployee] = useState({});
-  const {isPending, employees} = useGetEmployees();
+  const {isPending, employees, count} = useGetEmployees();
   const {deleteEmployee} = useDeleteEmployee();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,6 +66,7 @@ function Employees() {
         hasActions={true}
         dropdownItems={dropdownItems}
         handleItemClick={handleEmployeesOperations}
+        count={count}
       />
       <Modal title={employee.name} id="viewModal">
         <ViewEmployee employee={employee} />
