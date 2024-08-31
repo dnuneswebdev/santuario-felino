@@ -8,6 +8,7 @@ import Cat from "./pages/Cat";
 import Employee from "./pages/Employee";
 import ProtectedRoute from "./components/ProtectedRoute";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     ),
     errorElement: <Error />,
     children: [
+      {path: "/", element: <Dashboard />},
       {path: "/cats", element: <Cats />},
       {path: "/cats/:id", element: <Cat />},
       {path: "/employees", element: <Employees />},

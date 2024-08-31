@@ -21,7 +21,6 @@ function Cat() {
   const navigate = useNavigate();
 
   function onSubmit(formValues) {
-    console.log(formValues);
     formValues.departureDate === ""
       ? (formValues.departureDate = null)
       : formValues.departureDate;

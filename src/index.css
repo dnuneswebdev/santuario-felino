@@ -48,6 +48,10 @@ main {
   outline-style: none;
 }
 
+.recharts-tooltip-cursor {
+  display: none;
+}
+
 @media (max-width: 960px) {
   .login {
     background: none;
