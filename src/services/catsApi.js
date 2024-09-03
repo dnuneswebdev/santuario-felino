@@ -56,6 +56,12 @@ export async function editCat(cat, id) {
   return data;
 }
 
+export async function getCatsTotal() {
+  const {data} = await supabase.from("cats").select("*");
+
+  return data;
+}
+
 export async function uploadCatImage(imageFile, id) {
   const imageName = `${Math.random()}-${imageFile.name}`.replaceAll("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cats/${imageName}`;

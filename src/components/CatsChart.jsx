@@ -8,76 +8,14 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-const data2 = [
-  {
-    name: "Janeiro",
-    uv: 7,
-    pv: 2,
-  },
-  {
-    name: "Fevereiro",
-    uv: 2,
-    pv: 3,
-  },
-  {
-    name: "Março",
-    uv: 3,
-    pv: 4,
-  },
-  {
-    name: "Abril",
-    uv: 9,
-    pv: 4,
-  },
-  {
-    name: "Maio",
-    uv: 6,
-    pv: 7,
-  },
-  {
-    name: "Junho",
-    uv: 10,
-    pv: 11,
-  },
-  {
-    name: "Julho",
-    uv: 5,
-    pv: 6,
-  },
-  {
-    name: "Agosto",
-    uv: 4,
-    pv: 5,
-  },
-  {
-    name: "Setemrbo",
-    uv: 7,
-    pv: 8,
-  },
-  {
-    name: "Outubro",
-    uv: 11,
-    pv: 12,
-  },
-  {
-    name: "Novembro",
-    uv: 8,
-    pv: 9,
-  },
-  {
-    name: "Dezembro",
-    uv: 5,
-    pv: 6,
-  },
-];
+import {useEffect, useState} from "react";
 
 const CustomTooltip = ({active, payload, label}) => {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip bg-base-200 p-2 rounded-md">
         <p className="label">{`${label}`}</p>
-        <p className="desc font-semibold">{`${payload[0].value} adoções`}</p>
+        <p className="desc font-semibold">{`${payload[0].value} felino(s) adotado(s)`}</p>
       </div>
     );
   }
@@ -85,33 +23,102 @@ const CustomTooltip = ({active, payload, label}) => {
   return null;
 };
 
-function CatsChart({data}) {
+function CatsChart({cats}) {
   const theme = useSelector((state) => state.userState.theme);
+  const [chartData, setChartData] = useState([]);
+  const chartArr = [
+    {
+      month: "Janeiro",
+      adopted: 0,
+    },
+    {
+      month: "Fevereiro",
+      adopted: 0,
+    },
+    {
+      month: "Março",
+      adopted: 0,
+    },
+    {
+      month: "Abril",
+      adopted: 0,
+    },
+    {
+      month: "Maio",
+      adopted: 0,
+    },
+    {
+      month: "Junho",
+      adopted: 0,
+    },
+    {
+      month: "Julho",
+      adopted: 0,
+    },
+    {
+      month: "Agosto",
+      adopted: 0,
+    },
+    {
+      month: "Setembro",
+      adopted: 0,
+    },
+    // {
+    //   month: "Outubro",
+    //   adopted: 0,
+    // },
+    // {
+    //   month: "Novembro",
+    //   adopted: 0,
+    // },
+    // {
+    //   month: "Dezembro",
+    //   adopted: 0,
+    // },
+  ];
 
+  useEffect(
+    function () {
+      cats.map((cat) => {
+        const test = new Date(cat.departureDate).toLocaleString("pt-br", {
+          month: "long",
+        });
+
+        chartArr.find((item) => {
+          if (item.month.toLowerCase() === test) {
+            return (item.adopted += 1);
+          }
+        });
+      });
+
+      setChartData(chartArr);
+    },
+    [cats]
+  );
   return (
     <div className="mt-16">
-      <h2 className="text-xl mb-4">Adoção De Felinos Por Mês</h2>
+      <h2 className="text-xl mb-4">Adoção De Felinos Por Mês (2024)</h2>
       <ResponsiveContainer width="100%" height={400}>
         <ComposedChart
           width={500}
           height={400}
-          data={data2}
+          data={chartData}
           margin={{
             top: 20,
             bottom: 20,
           }}
         >
-          <XAxis dataKey="name" scale="band" />
+          <XAxis dataKey="month" scale="band" />
           <YAxis />
           <Tooltip content={<CustomTooltip />} />
           <Bar
-            dataKey="uv"
+            dataKey="adopted"
             barSize={35}
             fill={theme === "cupcake" ? "#ef9fbc" : "#bd93f9"}
           />
           <Line
             type="monotone"
-            dataKey="uv"
+            dataKey="adopted"
             stroke={theme === "cupcake" ? "#bd93f9" : "#ef9fbc"}
           />
         </ComposedChart>

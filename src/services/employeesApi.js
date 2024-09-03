@@ -51,6 +51,12 @@ export async function editEmployee(employee, id) {
   return data;
 }
 
+export async function getEmployeesTotal() {
+  const {data} = await supabase.from("employees").select("*");
+
+  return data;
+}
+
 export async function uploadEmployeeImage(imageFile, id) {
   const imageName = `${Math.random()}-${imageFile.name}`.replaceAll("/", "");
   const imagePath = `${supabaseUrl}/storage/v1/object/public/employees/${imageName}`;
