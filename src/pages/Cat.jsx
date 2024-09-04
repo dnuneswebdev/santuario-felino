@@ -5,12 +5,14 @@ import {useCreateCat} from "../hooks/cats/useCreateCat";
 import {useEditCat} from "../hooks/cats/useEditCat";
 import {useSelector} from "react-redux";
 import {defaultFormatDate} from "../utils/helpers";
+import {useState} from "react";
 import SectionTitle from "../components/SectionTitle";
 
 function Cat() {
   const cat = useSelector((state) => state.cat.cat);
   const {createCat, isCreatingCat} = useCreateCat();
   const {editCat, isEditingCat} = useEditCat();
+  const [selectedStatus, setSelectedStatus] = useState("");
   const params = useParams();
   const isEditing = params.id !== "add";
   const {
@@ -19,6 +21,10 @@ function Cat() {
     formState: {errors},
   } = useForm();
   const navigate = useNavigate();
+
+  function onChangeStatus(e) {
+    setSelectedStatus(e.target.value);
+  }
 
   function onSubmit(formValues) {
     formValues.departureDate === ""
@@ -154,11 +160,13 @@ function Cat() {
               className="input input-bordered input-sm w-full max-w-xs rounded-md"
               name="departureDate"
               id="departureDate"
+              max={new Date().toJSON().slice(0, 10)}
               defaultValue={
                 isEditing && cat.departureDate
                   ? defaultFormatDate(cat.departureDate)
                   : null
               }
+              disabled={selectedStatus !== "Adotado"}
               {...register("departureDate")}
             />
             <label htmlFor="microchipNumber" className="mt-4">
@@ -199,9 +207,12 @@ function Cat() {
               id="status"
               {...register("status")}
               defaultValue={isEditing ? cat.status : ""}
+              onChange={onChangeStatus}
             >
-              <option defaultValue="adotado">Adotado</option>
-              <option>Pronto Para Adoção</option>
+              <option defaultValue="Pronto Para Adoção">
+                Pronto Para Adoção
+              </option>
+              <option>Adotado</option>
               <option>Em Recuperação</option>
               <option>Enfermo</option>
             </select>
