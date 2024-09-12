@@ -43,8 +43,8 @@ function Sidebar() {
           <img
             src={`${
               theme === "cupcake"
-                ? "/src/assets/cat-logo-light.png"
-                : "/src/assets/cat-logo-dark.png"
+                ? "/assets/cat-logo-light.png"
+                : "/assets/cat-logo-dark.png"
             }`}
             alt=""
             className="w-40 mx-auto mb-10 "

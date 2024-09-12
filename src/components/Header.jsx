@@ -26,7 +26,7 @@ function Header({handleSidebar}) {
       <div className="flex justify-end items-center w-full gap-x-2">
         <div className="avatar flex items-center">
           <div className="ring-secondary rounded-full ring ring-offset-0 w-8 mr-2">
-            <img src="src/assets/avatar.png" />
+            <img src="/assets/avatar.png" />
           </div>
           <p className="font-semibold">Admin</p>
         </div>
