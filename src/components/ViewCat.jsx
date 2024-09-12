@@ -40,7 +40,7 @@ function ViewCat({cat, statusTag}) {
           ) : (
             <div className="tooltip tooltip-bottom" data-tip="Carregar Imagem">
               <img
-                src={cat.image ? cat.image : "/src/assets/cat-default.png"}
+                src={cat.image ? cat.image : "/assets/cat-default.png"}
                 className="lg:w-48 lg:h-48 rounded-md cursor-pointer"
                 onClick={onImageClick}
               />

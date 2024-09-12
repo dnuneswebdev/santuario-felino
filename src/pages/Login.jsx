@@ -36,8 +36,8 @@ function Login() {
             className="w-60 lg:w-72 mx-auto mt-6"
             src={`${
               theme === "cupcake"
-                ? "/src/assets/cat-logo-light.png"
-                : "/src/assets/cat-logo-dark.png"
+                ? "/assets/cat-logo-light.png"
+                : "/assets/cat-logo-dark.png"
             }`}
             alt="Santuário Felino"
           />

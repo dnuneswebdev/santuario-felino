@@ -39,7 +39,7 @@ function ViewEmployee({employee}) {
           ) : (
             <div className="tooltip tooltip-bottom" data-tip="Carregar Imagem">
               <img
-                src={employee.image ? employee.image : "/src/assets/user.png"}
+                src={employee.image ? employee.image : "/assets/user.png"}
                 className="lg:w-48 lg:h-48 rounded-md cursor-pointer"
                 onClick={onImageClick}
               />
