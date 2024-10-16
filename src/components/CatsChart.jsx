@@ -63,14 +63,14 @@ function CatsChart({cats}) {
       month: "Setembro",
       adopted: 0,
     },
-    // {
-    //   month: "Outubro",
-    //   adopted: 0,
-    // },
-    // {
-    //   month: "Novembro",
-    //   adopted: 0,
-    // },
+    {
+      month: "Outubro",
+      adopted: 0,
+    },
+    {
+      month: "Novembro",
+      adopted: 0,
+    },
     // {
     //   month: "Dezembro",
     //   adopted: 0,
